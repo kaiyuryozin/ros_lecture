@@ -1,0 +1,5 @@
+<launch>
+  <node name="logger1" pkg="ros_lecture" type="logger" />
+  <node name="logger2" pkg="ros_lecture" type="logger" />
+</launch>
+

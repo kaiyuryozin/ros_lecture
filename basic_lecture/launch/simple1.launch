@@ -1,0 +1,5 @@
+<launch>
+  <node name="simple_talker"   pkg="basic_lecture" type="simple_talker" />
+  <node name="simple_listener" pkg="basic_lecture" type="simple_listener" />
+</launch>
+

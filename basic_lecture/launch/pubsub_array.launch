@@ -1,0 +1,5 @@
+<launch>
+  <node name="talker0"   pkg="ros_lecture" type="talker_array"   output="screen"/>
+  <node name="listener0" pkg="ros_lecture" type="listener_array" output="screen"/>
+</launch>
+
