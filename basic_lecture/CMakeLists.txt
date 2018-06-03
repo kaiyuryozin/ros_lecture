@@ -137,6 +137,22 @@ include_directories(
 add_executable(simple_talker   src/simple_talker.cpp)
 add_executable(simple_listener src/simple_listener.cpp)
 
+#add_executable(array_talker   src/array_talker.cpp)
+#add_executable(array_listener src/array_listener.cpp)
+
+#add_executable(logger src/logger.cpp)
+
+#add_executable(cmsg_talker   src/cmsg_talker.cpp)
+#add_executable(cmsg_listener src/cmsg_listener.cpp)
+
+#add_executable(timing_talker1   src/timing_talker1.cpp)
+#add_executable(timing_listener1 src/timing_listener1.cpp)
+#add_executable(timing_bridge1 src/timing_bridge1.cpp)
+
+add_executable(twist_publisher src/twist_publisher.cpp)
+
+
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -153,6 +169,8 @@ add_executable(simple_listener src/simple_listener.cpp)
 # )
 target_link_libraries(simple_talker   ${catkin_LIBRARIES})
 target_link_libraries(simple_listener ${catkin_LIBRARIES})
+
+target_link_libraries(twist_publisher ${catkin_LIBRARIES})
 
 #############
 ## Install ##

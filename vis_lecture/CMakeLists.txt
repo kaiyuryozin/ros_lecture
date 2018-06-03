@@ -139,6 +139,7 @@ include_directories(
 add_executable(joint_publisher1 src/joint_publisher1.cpp)
 add_executable(vis_tf_broadcast src/vis_tf_broadcast.cpp)
 add_executable(vis_tf_listen src/vis_tf_listen.cpp)
+add_executable(vis_robot_sim src/vis_robot_sim.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -157,6 +158,7 @@ add_executable(vis_tf_listen src/vis_tf_listen.cpp)
 target_link_libraries(joint_publisher1 ${catkin_LIBRARIES})
 target_link_libraries(vis_tf_broadcast ${catkin_LIBRARIES})
 target_link_libraries(vis_tf_listen ${catkin_LIBRARIES})
+target_link_libraries(vis_robot_sim ${catkin_LIBRARIES})
 
 #############
 ## Install ##
