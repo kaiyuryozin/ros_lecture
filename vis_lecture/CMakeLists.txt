@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -136,6 +137,8 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/vis_lecture_node.cpp)
 
 add_executable(joint_publisher1 src/joint_publisher1.cpp)
+add_executable(vis_tf_broadcast src/vis_tf_broadcast.cpp)
+add_executable(vis_tf_listen src/vis_tf_listen.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -152,6 +155,8 @@ add_executable(joint_publisher1 src/joint_publisher1.cpp)
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(joint_publisher1 ${catkin_LIBRARIES})
+target_link_libraries(vis_tf_broadcast ${catkin_LIBRARIES})
+target_link_libraries(vis_tf_listen ${catkin_LIBRARIES})
 
 #############
 ## Install ##
