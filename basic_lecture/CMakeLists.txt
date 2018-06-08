@@ -134,8 +134,8 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/basic_lecture_node.cpp)
-add_executable(simple_talker   src/simple_talker.cpp)
-add_executable(simple_listener src/simple_listener.cpp)
+add_executable(basic_simple_talker   src/basic_simple_talker.cpp)
+add_executable(basic_simple_listener src/basic_simple_listener.cpp)
 
 #add_executable(array_talker   src/array_talker.cpp)
 #add_executable(array_listener src/array_listener.cpp)
@@ -167,8 +167,8 @@ add_executable(twist_publisher src/twist_publisher.cpp)
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(simple_talker   ${catkin_LIBRARIES})
-target_link_libraries(simple_listener ${catkin_LIBRARIES})
+target_link_libraries(basic_simple_talker   ${catkin_LIBRARIES})
+target_link_libraries(basic_simple_listener ${catkin_LIBRARIES})
 
 target_link_libraries(twist_publisher ${catkin_LIBRARIES})
 
