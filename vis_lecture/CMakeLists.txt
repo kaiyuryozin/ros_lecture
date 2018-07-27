@@ -144,6 +144,9 @@ add_executable(vis_float32_publisher src/vis_float32_publisher.cpp)
 add_executable(vis_marker_publisher1 src/vis_marker_publisher1.cpp)
 add_executable(vis_marker_publisher2 src/vis_marker_publisher2.cpp)
 add_executable(vis_diagnostic src/vis_diagnostic.cpp)
+add_executable(vis_overlay_menu_publisher src/vis_overlay_menu_publisher.cpp)
+add_executable(vis_overlay_text_publisher src/vis_overlay_text_publisher.cpp)
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -167,6 +170,8 @@ target_link_libraries(vis_float32_publisher ${catkin_LIBRARIES})
 target_link_libraries(vis_marker_publisher1 ${catkin_LIBRARIES})
 target_link_libraries(vis_marker_publisher2 ${catkin_LIBRARIES})
 target_link_libraries(vis_diagnostic ${catkin_LIBRARIES})
+target_link_libraries(vis_overlay_menu_publisher ${catkin_LIBRARIES})
+target_link_libraries(vis_overlay_text_publisher ${catkin_LIBRARIES})
 
 #############
 ## Install ##
