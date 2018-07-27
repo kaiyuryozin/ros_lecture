@@ -6,6 +6,8 @@
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
 
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
@@ -13,44 +15,7 @@
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
     <arg name="headless" value="$(arg headless)"/>
   </include>
-
-  <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
-   
-  <!-- Load joint controller configurations from YAML file to parameter server -->
-  <rosparam>
-    my_robo:
-      joint_state_controller:
-        type: joint_state_controller/JointStateController
-        publish_rate: 50  
-      
-      controller0:
-        type: velocity_controllers/JointVelocityController
-        joint: wheel0_housing_joint
-
-      controller1:
-        type: velocity_controllers/JointVelocityController
-        joint: wheel1_housing_joint
-
-      controller2:
-        type: velocity_controllers/JointVelocityController
-        joint: wheel2_housing_joint
-
-      controller3:
-        type: position_controllers/JointPositionController
-        joint: gun0_base2_joint
-
-      controller4:
-        type: position_controllers/JointPositionController
-        joint: gun0_gun_joint
-  </rosparam>
-
-  <!-- load the controllers -->
-
-  <node name="controller_spawner" pkg="controller_manager"
-  type="spawner" ns="my_robo" output="screen"
-  args="joint_state_controller controller0 controller1 controller2 controller3 controller4"/>
-
-  <!-- convert joint states to TF transforms for rviz, etc -->
+  
   <node name="robot_state_publisher" pkg="robot_state_publisher"
   type="robot_state_publisher"
   respawn="false" output="screen" ns="/my_robo"/>

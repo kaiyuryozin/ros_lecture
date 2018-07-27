@@ -1,11 +1,19 @@
+<?xml version="1.0"?>
 <robot name="my_robo" xmlns:xacro="http://ros.org/wiki/xacro">
+<!--
+  <link name="world"/>
+  <joint name="joint1" type="fixed">
+    <origin xyz="0 0 0.5" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child  link="body_link"/>
+  </joint>
+-->
   <link name="base_link"/>
   <joint name="joint1" type="fixed">
     <parent link="base_link"/>
-    <child  link="my_link"/>
+    <child  link="body_link"/>
   </joint>
-
- <link name="my_link">
+  <link name="body_link">
    <inertial>
      <origin xyz="0 0 0.5" rpy="0 0 0"/>
      <mass value="1"/>
@@ -28,14 +36,8 @@
        <box size="1 1 1" />
      </geometry>
    </collision>
- </link>
-
-
-  <!-- ===============  Gazebo =============== -->
-  <gazebo>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>my_robo</robotNamespace>
-    </plugin>
+  </link>
+  <gazebo reference="body_link">
+    <material>Gazebo/Red</material>
   </gazebo>
-  
 </robot>
