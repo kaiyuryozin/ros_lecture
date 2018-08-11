@@ -60,7 +60,8 @@
             min_velocity           : -0.3
             has_acceleration_limits: true
             max_acceleration       : 0.3  # rad/s^2
-            min_acceleration       : -0.3  </rosparam>
+            min_acceleration       : -0.3
+  </rosparam>
 
   <node name="controller_spawner" pkg="controller_manager"
         type="spawner" respawn="false"
@@ -72,5 +73,12 @@
         respawn="false" output="screen" ns="/wheel_robot"/>
    
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omni_test)/config/SETTING.rviz" required="true" />
+
+  <node name="sim_model_base_publisher" pkg="sim_lecture" type="sim_model_base_publisher"  output="screen">
+    <param name="model_name"  value="wheel_robot" />
+    <param name="world_frame" value="/world" />
+    <param name="base_frame"  value="/base_link" />
+  </node>
+
 
 </launch>
