@@ -6,15 +6,12 @@ void chatterCallback(const std_msgs::String& msg){
 }
 
 int main(int argc, char **argv){
-  ros::init(argc, argv, "listener");
+  ros::init(argc, argv, "basic_listener");
   ros::NodeHandle n;
   ros::Subscriber sub = n.subscribe("chatter", 10, chatterCallback);
   ros::Rate loop_rate(10);
 
-  while (ros::ok()){
-    ros::spinOnce();
-    loop_rate.sleep();
-  }
+  ros::spin();
   return 0;
 }
 

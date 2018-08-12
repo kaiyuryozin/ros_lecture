@@ -3,7 +3,7 @@
 
 int HZ=10;
 int main(int argc, char **argv){
-  ros::init(argc, argv, "talker");
+  ros::init(argc, argv, "basic_timing_talker");
   ros::NodeHandle n;
   ros::NodeHandle pn("~");
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);

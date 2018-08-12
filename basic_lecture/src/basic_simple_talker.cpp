@@ -2,7 +2,7 @@
 #include "std_msgs/String.h"
 
 int main(int argc, char **argv){
-  ros::init(argc, argv, "simple_talker");
+  ros::init(argc, argv, "basic_simple_talker");
   ros::NodeHandle n;
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 10);
   ros::Rate loop_rate(10);

@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -47,11 +48,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+  FILES
+  cmsg.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -68,10 +68,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -105,7 +105,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES basic_lecture
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
@@ -136,23 +136,16 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/basic_lecture_node.cpp)
 add_executable(basic_simple_talker   src/basic_simple_talker.cpp)
 add_executable(basic_simple_listener src/basic_simple_listener.cpp)
-
-#add_executable(array_talker   src/array_talker.cpp)
-#add_executable(array_listener src/array_listener.cpp)
-
-#add_executable(logger src/logger.cpp)
-
-#add_executable(cmsg_talker   src/cmsg_talker.cpp)
-#add_executable(cmsg_listener src/cmsg_listener.cpp)
-
-#add_executable(timing_talker1   src/timing_talker1.cpp)
-#add_executable(timing_listener1 src/timing_listener1.cpp)
-#add_executable(timing_bridge1 src/timing_bridge1.cpp)
-
-add_executable(twist_publisher src/twist_publisher.cpp)
-add_executable(basic_param_talker   src/basic_param_talker.cpp)
-
-
+add_executable(basic_logger          src/basic_logger.cpp)
+add_executable(basic_twist_publisher src/basic_twist_publisher.cpp)
+add_executable(basic_timing_talker   src/basic_timing_talker.cpp)
+add_executable(basic_timing_listener src/basic_timing_listener.cpp)
+add_executable(basic_timing_bridge   src/basic_timing_bridge.cpp)
+add_executable(basic_array_talker    src/basic_array_talker.cpp)
+add_executable(basic_array_listener  src/basic_array_listener.cpp)
+add_executable(basic_cmsg_talker     src/basic_cmsg_talker.cpp)
+add_executable(basic_param_talker    src/basic_param_talker.cpp)
+add_executable(basic_timer_talker    src/basic_timer_talker.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -163,16 +156,48 @@ add_executable(basic_param_talker   src/basic_param_talker.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(basic_cmsg_talker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(basic_simple_talker   ${catkin_LIBRARIES})
-target_link_libraries(basic_simple_listener ${catkin_LIBRARIES})
-
-target_link_libraries(twist_publisher ${catkin_LIBRARIES})
-target_link_libraries(basic_param_talker   ${catkin_LIBRARIES})
+target_link_libraries(basic_simple_talker
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_simple_listener
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_logger
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_twist_publisher
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_timing_talker
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_timing_bridge
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_timing_listener
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_array_talker
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_array_listener
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_cmsg_talker
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_param_talker
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_timer_talker
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##

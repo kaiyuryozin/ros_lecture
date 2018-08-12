@@ -10,7 +10,7 @@ void joy_callback(const sensor_msgs::Joy& joy_msg){
 }
 
 int main(int argc, char **argv){
-    ros::init(argc, argv, "s4_omni_demo");
+    ros::init(argc, argv, "basic_twist_publisher");
     ros::NodeHandle n;
 
     //publish
@@ -22,7 +22,7 @@ int main(int argc, char **argv){
     ros::Rate loop_rate(10);
     while (ros::ok()){
         cmd_pub.publish(cmd_vel);
-	ros::spinOnce();
+    	ros::spinOnce();
         loop_rate.sleep();
     }
     return 0;

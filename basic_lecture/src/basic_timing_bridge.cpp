@@ -15,19 +15,22 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg)
 }
 
 int main(int argc, char **argv){
-  ros::init(argc, argv, "bridge");
+  ros::init(argc, argv, "basic_timing_bridge");
   ros::NodeHandle n;
   ros::NodeHandle pn("~");
   chatter_pub = n.advertise<std_msgs::String>("chatter_out", 1000);
   ros::Subscriber chatter_sub = n.subscribe("chatter_in", 1000, chatterCallback);
   pn.getParam("number",  number);
 	pn.getParam("HZ",  HZ);
-	ros::Rate loop_rate(HZ);
 
-  while (ros::ok()){
-    ros::spinOnce();
-    loop_rate.sleep();
+  if(HZ>0){
+  	ros::Rate loop_rate(HZ);
+    while (ros::ok()){
+      ros::spinOnce();
+      loop_rate.sleep();
+    }
   }
+  else ros::spin();
   return 0;
 }
 

@@ -1,4 +1,0 @@
-<launch>
-  <node name="timing_talker1"   pkg="ros_lecture" type="timing_talker1"   output="screen"/>
-  <node name="timing_listener1" pkg="ros_lecture" type="timing_listener1" output="screen"/>
-</launch>
