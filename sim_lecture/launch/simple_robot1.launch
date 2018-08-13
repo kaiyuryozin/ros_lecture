@@ -23,6 +23,6 @@
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
     args="-urdf -model my_robo -z 0.04 -param robot_description"/>
  
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omni_test)/config/SETTING.rviz" required="true" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find sim_lecture)/config/SETTING.rviz" required="true" />
 
 </launch>
