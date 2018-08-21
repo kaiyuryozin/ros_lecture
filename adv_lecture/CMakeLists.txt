@@ -144,7 +144,7 @@ add_executable(adv_cmsg_listener src/adv_cmsg_listener.cpp)
 add_executable(reconfigure1 src/reconfigure1.cpp)
 add_executable(adv_robot_sim src/adv_robot_sim.cpp)
 add_executable(adv_orientation src/adv_orientation.cpp)
-
+add_executable(adv_time src/adv_time.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -174,6 +174,10 @@ target_link_libraries(adv_robot_sim
 target_link_libraries(adv_orientation
   ${catkin_LIBRARIES}
 )
+target_link_libraries(adv_time
+  ${catkin_LIBRARIES}
+)
+
 
 #############
 ## Install ##
