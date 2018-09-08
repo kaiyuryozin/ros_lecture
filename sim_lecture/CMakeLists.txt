@@ -136,6 +136,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/sim_lecture_node.cpp)
 add_executable(sim_model_base_publisher src/sim_model_base_publisher.cpp)
+add_executable(sim_omni_commander src/sim_omni_commander.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -152,6 +153,9 @@ add_executable(sim_model_base_publisher src/sim_model_base_publisher.cpp)
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(sim_model_base_publisher
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(sim_omni_commander
   ${catkin_LIBRARIES}
 )
 
