@@ -2,14 +2,16 @@
 <launch>
   <arg name="model" default="$(find nav_lecture)/urdf/wheel_robot1.urdf" />
   <arg name="rvizconfig" default="$(find nav_lecture)/rviz/wheel_robot1.rviz" />
+  <arg name="joy" default="false" />
   <param name="robot_description" type="str" textfile="$(arg model)"/>
+  <param name="/use_sim_time" value="true" />
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
   <!--
     <arg name="world_name" value="$(find sim_lecture)/world/wheel_robot5.world" />
+    <arg name="use_sim_time" value="true"/>
   -->
     <arg name="paused" value="false"/>
-    <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
@@ -17,58 +19,7 @@
 
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model wheel_robot" />
 
-  <rosparam>
-    wheel_robot:
-      joint_state_controller:
-        type: joint_state_controller/JointStateController
-        publish_rate: 50  
-      
-      diff_drive_controller:
-        type        : "diff_drive_controller/DiffDriveController"
-        left_wheel  : 'left_wheel_joint'
-        right_wheel : 'right_wheel_joint'
-        publish_rate: 20.0               # default: 50
-        pose_covariance_diagonal : [1000000.0, 1000000.0, 1000000.0, 1000000.0, 1000000.0, 1000000.0]
-        twist_covariance_diagonal: [0.1, 0.1, 1000000.0, 1000000.0, 1000000.0, 0.5]
-
-        # Wheel separation and diameter. These are both optional.
-        # diff_drive_controller will attempt to read either one or both from the
-        # URDF if not specified as a parameter
-        wheel_separation : 0.20
-        wheel_radius : 0.05
-
-        # Wheel separation and radius multipliers
-        wheel_separation_multiplier: 1.0 # default: 1.0
-        wheel_radius_multiplier    : 1.1 # default: 1.0
-
-        # Velocity commands timeout [s], default 0.5
-        cmd_vel_timeout: 1.0
-          
-        # Base frame_id
-        base_frame_id: base_footprint #default: base_link
-        odom_frame_id: odom_combined #default: odom
-        enable_odom_tf: false
-          
-        # Velocity and acceleration limits
-        # Whenever a min_* is unspecified, default to -max_*
-        linear:
-          x:
-            has_velocity_limits    : true
-            max_velocity           : 0.55  # m/s
-            min_velocity           : -0.55 # m/s
-            has_acceleration_limits: true
-            max_acceleration       : 0.2  # m/s^2
-            min_acceleration       : -0.2 # m/s^2
-        angular:
-          z:
-            has_velocity_limits    : true
-            max_velocity           : 2.0  # rad/s
-            min_velocity           : -2.0
-            has_acceleration_limits: true
-            max_acceleration       : 1.0  # rad/s^2
-            min_acceleration       : -1.0
-  </rosparam>
-
+  <rosparam command="load" file="$(find nav_lecture)/config/diff_drive.yaml" />  
   <node name="controller_spawner" pkg="controller_manager"
         type="spawner" respawn="false"
         output="screen" ns="/wheel_robot"
@@ -83,9 +34,10 @@
 
   <node name="nav_gazebo_odom" pkg="nav_lecture" type="nav_gazebo_odom"  output="screen">
     <param name="model_name"  value="wheel_robot" />
-    <param name="world_frame" value="/odom_combined" />
-    <param name="base_frame"  value="/base_footprint" />
-    <param name="publish_rate"  value="10" />
+    <param name="world_frame" value="odom_combined" />
+    <param name="base_frame"  value="tracking" />
+    <param name="publish_rate"  value="5" />
+    <remap from="odom" to="/wheel_robot/tracking/odom" />
   </node>
 
 
@@ -96,6 +48,16 @@
     </node>
   </group>
 
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+    <rosparam command="load" file="$(find nav_lecture)/config/ekf_template.yaml" />
+
+<!-- Placeholder for output topic remapping
+    <remap from="odometry/filtered" to=""/>
+    <remap from="accel/filtered" to=""/>
+-->
+  </node>
+
+<!--
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     <param name="output_frame" value="odom_combined"/>
     <param name="freq" value="20.0"/>
@@ -107,11 +69,8 @@
     <param name="debug" value="true"/>
     <param name="self_diagnose" value="false"/>
     <remap from="odom" to="/wheel_robot/diff_drive_controller/odom" />
-<!--
-    <remap from="vo" to="/odom" />
--->
     <remap from="gps" to="/odom" />
   </node>
-
+-->
   <node pkg="tf" type="static_transform_publisher" name="tf1" args="0 0 0 0 0 0 map odom_combined 100" />
 </launch>

@@ -58,44 +58,40 @@ Visualization Manager:
       Collision Enabled: false
       Enabled: true
       Links:
+        /wheel_robot/base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        /wheel_robot/body_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /wheel_robot/left_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /wheel_robot/lidar_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /wheel_robot/rear_ball_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /wheel_robot/right_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base_footprint:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        body_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        lidar_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_ball_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -175,25 +171,21 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base_footprint:
-          Value: false
-        base_link:
-          Value: false
-        body_link:
-          Value: false
-        left_wheel_link:
-          Value: true
-        lidar_link:
-          Value: false
         map:
           Value: true
-        odom_combined:
+        wheel_robot/base_link:
           Value: true
-        rear_ball_link:
-          Value: false
-        right_wheel_link:
+        wheel_robot/body_link:
           Value: true
-        tracking:
+        wheel_robot/left_wheel_link:
+          Value: true
+        wheel_robot/lidar_link:
+          Value: true
+        wheel_robot/odom:
+          Value: true
+        wheel_robot/rear_ball_link:
+          Value: true
+        wheel_robot/right_wheel_link:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -202,19 +194,17 @@ Visualization Manager:
       Show Names: true
       Tree:
         map:
-          odom_combined:
-            base_link:
-              body_link:
-                lidar_link:
+          wheel_robot/odom:
+            wheel_robot/base_link:
+              wheel_robot/body_link:
+                wheel_robot/lidar_link:
                   {}
-              left_wheel_link:
+              wheel_robot/left_wheel_link:
                 {}
-              rear_ball_link:
+              wheel_robot/rear_ball_link:
                 {}
-              right_wheel_link:
+              wheel_robot/right_wheel_link:
                 {}
-            tracking:
-              {}
       Update Interval: 0
       Value: true
     - Angle Tolerance: 0.00999999978
@@ -251,22 +241,6 @@ Visualization Manager:
       Topic: /odometry/filtered
       Unreliable: false
       Value: true
-    - Class: jsk_rviz_plugin/TFTrajectory
-      Enabled: true
-      Name: trjt_filtered
-      Value: true
-      color: 25; 255; 240
-      duration: 100
-      frame: base_link
-      line_width: 0.00999999978
-    - Class: jsk_rviz_plugin/TFTrajectory
-      Enabled: true
-      Name: trjt_tracking
-      Value: true
-      color: 255; 255; 127
-      duration: 10
-      frame: tracking
-      line_width: 0.00999999978
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -307,10 +281,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.693891943
+      Pitch: 0.428891927
       Target Frame: base_link
       Value: ThirdPersonFollower (rviz)
-      Yaw: 6.02690458
+      Yaw: 5.88190365
     Saved: ~
 Window Geometry:
   Displays:
