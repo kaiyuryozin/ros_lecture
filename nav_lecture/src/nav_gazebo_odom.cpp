@@ -25,12 +25,14 @@ double sdlab_normal(double mu, double sigma)
 
 std::string model_name="";
 std::string world_frame="";
-std::string base_frame="";
+std::string odom_frame="";
+std::string true_frame="";
 float publish_rate=20.0;
 float noise=0.0;
 bool tf_enable=false;
+ros::Publisher odom_pub;
 
-void tf_publish(geometry_msgs::Pose pose0){
+void tf_publish(geometry_msgs::Pose pose0, std::string base_frame){
   static tf::TransformBroadcaster br;
   tf::Transform transform;
   tf::poseMsgToTF(pose0,transform);
@@ -38,6 +40,7 @@ void tf_publish(geometry_msgs::Pose pose0){
 }
 
 nav_msgs::Odometry last_odom;
+geometry_msgs::Pose last_pose;
 bool enable_odom=false;
 void models_callback(const gazebo_msgs::ModelStates& model_msg){    
   int model_size=model_msg.name.size();
@@ -45,7 +48,7 @@ void models_callback(const gazebo_msgs::ModelStates& model_msg){
     if(model_msg.name[i]==model_name){
       last_odom.header.frame_id=world_frame;
 	    last_odom.header.stamp=ros::Time::now();
-	    last_odom.child_frame_id=base_frame;
+	    last_odom.child_frame_id=odom_frame;
 	    last_odom.pose.pose=model_msg.pose[i];
 	    last_odom.pose.covariance = {
 		    0.5, 0, 0, 0, 0, 0,  // covariance on gps_x
@@ -57,8 +60,7 @@ void models_callback(const gazebo_msgs::ModelStates& model_msg){
 
 	    last_odom.pose.pose.position.x+=sdlab_normal(0.0, noise);
 	    last_odom.pose.pose.position.y+=sdlab_normal(0.0, noise);
-	    last_odom.pose.pose.position.z;
-
+	    
 	    last_odom.twist.twist=model_msg.twist[i];
 	    last_odom.twist.covariance = {
 		    1000, 0, 0, 0, 0, 0,  // covariance on gps_x
@@ -67,8 +69,23 @@ void models_callback(const gazebo_msgs::ModelStates& model_msg){
         0, 0, 0, 1000, 0, 0,  // large covariance on rot x
         0, 0, 0, 0, 1000, 0,  // large covariance on rot y
         0, 0, 0, 0, 0, 1000}; // large covariance on rot z
-	    enable_odom=true;
+	    
+      last_pose=model_msg.pose[i];
+      enable_odom=true;
 	  }
+  }
+}
+
+void true_callback(const ros::TimerEvent&)
+{
+	if(tf_enable)tf_publish(last_pose,true_frame);
+}
+
+void odom_callback(const ros::TimerEvent&)
+{
+	if(tf_enable){
+    odom_pub.publish(last_odom);
+	  tf_publish(last_odom.pose.pose,odom_frame);
   }
 }
 
@@ -81,25 +98,35 @@ int main(int argc, char **argv)
   //rosparam
   pn.getParam("model_name",   model_name);
   pn.getParam("world_frame",  world_frame);
-  pn.getParam("base_frame",   base_frame);
+  pn.getParam("odom_frame",   odom_frame);
+  pn.getParam("true_frame",   true_frame);
   pn.getParam("publish_rate", publish_rate);
   pn.getParam("noise",        noise);
   pn.getParam("tf_enable",    tf_enable);
 
   //publisher
-  ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("odom", 10);
+  odom_pub = n.advertise<nav_msgs::Odometry>("odom", 10);
 
   //subscriibe
   ros::Subscriber joy_sub   = n.subscribe("/gazebo/model_states", 10, models_callback);
 
+  //timer
+  ros::Timer timer1 = n.createTimer(ros::Duration(0.1), true_callback);
+  ros::Timer timer2 = n.createTimer(ros::Duration(1.0/publish_rate), odom_callback);
+	ros::spin();
+/*
   ros::Rate loop_rate(publish_rate); 
   while (ros::ok()){
 	if(enable_odom){
 	  odom_pub.publish(last_odom);
-	  if(tf_enable)tf_publish(last_odom.pose.pose);
+	  if(tf_enable){
+      tf_publish(last_odom.pose.pose,odom_frame);
+      tf_publish(last_pose,true_frame);
+    }
 	}
 	ros::spinOnce();
 	loop_rate.sleep();
-  } 
+  }
+*/ 
   return 0;
 }

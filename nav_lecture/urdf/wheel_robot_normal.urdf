@@ -214,7 +214,7 @@
       </ray>
       <plugin name="gazebo_ros_lidar_controller" filename="libgazebo_ros_laser.so">
         <topicName>/wheel_robot/laser/scan</topicName>
-        <frameName>lidar_link</frameName>
+        <frameName>wheel_robot/lidar_link</frameName>
       </plugin>
     </sensor>
   </gazebo>

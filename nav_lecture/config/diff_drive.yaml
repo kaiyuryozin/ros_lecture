@@ -25,8 +25,8 @@ wheel_robot:
     cmd_vel_timeout: 1.0
           
     # Base frame_id
-    base_frame_id: /wheel_robot/base_link #default: base_link
-    odom_frame_id: /wheel_robot/odom #default: odom
+    base_frame_id: wheel_robot/base_link #default: base_link
+    odom_frame_id: wheel_robot/odom #default: odom
     enable_odom_tf: false
           
     # Velocity and acceleration limits
