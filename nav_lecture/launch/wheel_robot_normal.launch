@@ -28,8 +28,8 @@
 
   <node name="nav_gazebo_odom" pkg="nav_lecture" type="nav_gazebo_odom"  output="screen">
     <param name="model_name"  value="wheel_robot" />
-    <param name="world_frame" value="/wheel_robot/odom" />
-    <param name="base_frame"  value="/wheel_robot/base_link" />
+    <param name="world_frame" value="wheel_robot/odom" />
+    <param name="odom_frame"  value="wheel_robot/base_link" />
     <param name="publish_rate"  value="20" />
     <param name="noise"  value="0.0" />
     <param name="tf_enable"  value="true" />
@@ -38,7 +38,7 @@
 
   <group if="$(arg joy)">
     <node name="joy_node"   pkg="joy" type="joy_node" />
-    <node name="twist_publisher" pkg="basic_lecture" type="twist_publisher">
+    <node name="basic_twist_publisher" pkg="basic_lecture" type="basic_twist_publisher">
       <remap from="cmd_vel" to="/wheel_robot/diff_drive_controller/cmd_vel" />
     </node>
   </group>

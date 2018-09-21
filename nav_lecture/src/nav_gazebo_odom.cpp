@@ -34,9 +34,11 @@ ros::Publisher odom_pub;
 
 void tf_publish(geometry_msgs::Pose pose0, std::string base_frame){
   static tf::TransformBroadcaster br;
-  tf::Transform transform;
-  tf::poseMsgToTF(pose0,transform);
-  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), world_frame, base_frame));
+  if(base_frame!=""){
+    tf::Transform transform;
+    tf::poseMsgToTF(pose0,transform);
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), world_frame, base_frame));
+  }
 }
 
 nav_msgs::Odometry last_odom;
