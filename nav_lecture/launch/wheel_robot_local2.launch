@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  <env name="GAZEBO_MODEL_PATH" value="$(find nav_lecture)/sdf:$(optenv GAZEBO_MODEL_PATH)" /> 
   <arg name="model" default="$(find nav_lecture)/urdf/wheel_robot_normal.urdf" />
   <arg name="rvizconfig" default="$(find nav_lecture)/rviz/wheel_robot_local2.rviz" />
   <arg name="joy" default="false" />
@@ -20,10 +19,11 @@
 
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model wheel_robot" />
 
+<!--
   <rosparam command="load" file="$(find nav_lecture)/config/diff_drive.yaml" />  
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
         ns="/wheel_robot" args="joint_state_controller diff_drive_controller"/>
-
+-->
   <node name="robot_state_publisher" pkg="robot_state_publisher"
         type="robot_state_publisher"
         respawn="false" output="screen" ns="/wheel_robot"/>
