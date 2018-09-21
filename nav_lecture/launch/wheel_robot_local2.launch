@@ -19,11 +19,10 @@
 
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model wheel_robot" />
 
-<!--
   <rosparam command="load" file="$(find nav_lecture)/config/diff_drive.yaml" />  
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
         ns="/wheel_robot" args="joint_state_controller diff_drive_controller"/>
--->
+
   <node name="robot_state_publisher" pkg="robot_state_publisher"
         type="robot_state_publisher"
         respawn="false" output="screen" ns="/wheel_robot"/>
